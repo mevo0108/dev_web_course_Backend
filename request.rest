@@ -1,10 +1,39 @@
-###
 
-GET http://localhost:3000/
-
-###
+### GET ALL MOVIES
 
 GET http://localhost:3000/movie
+
+### GET MOVIES BY YEAR
+
+GET http://localhost:3000/movie?year=2010
+
+### GET MOVIE BY ID
+
+GET http://localhost:3000/movie/693e8818cd0f8fef6b4c7359 
+
+### CREATE A NEW MOVIE
+
+POST http://localhost:3000/movie
+Content-Type: application/json
+
+{
+  "title": "inception",
+  "year": 2019
+}
+
+### DELETE A MOVIE BY ID
+
+DELETE http://localhost:3000/movie/693e8810cd0f8fef6b4c7357 
+
+### UPDATE A MOVIE BY I
+
+PUT http://localhost:3000/movie/693e8818cd0f8fef6b4c7359
+Content-Type: application/json
+
+{
+  "title": "The Dark Knight",
+  "year": 2013
+}
 
 ###
 
