@@ -11,7 +11,8 @@
     "dev": "nodemon --env-file=.env_dev index.js"
   },
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "mongoose": "^9.0.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.11"
