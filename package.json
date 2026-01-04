@@ -8,13 +8,16 @@
   "main": "index.js",
   "scripts": {
     "start": "node --env-file=.env_dev index.js",
-    "dev": "nodemon --env-file=.env_dev index.js"
+    "dev": "nodemon --env-file=.env_dev index.js",
+    "test": "jest --detectOpenHandles --forceExit"
   },
   "dependencies": {
     "express": "^5.1.0",
     "mongoose": "^9.0.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.11"
+    "jest": "^30.2.0",
+    "nodemon": "^3.1.11",
+    "supertest": "^7.1.4"
   }
 }
