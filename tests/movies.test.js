@@ -1,5 +1,5 @@
 const request = require('supertest');
-const app = require('../index'); // Adjust the path as necessary
+const initApp = require('../index'); // Adjust the path as necessary
 const movies = require('../models/moviesModel');
 
 var testData = [
@@ -17,8 +17,9 @@ var testData = [
     }
 
 ]
-
+let app;
 beforeAll(async () => {
+    app = await initApp;
     // Any setup needed before tests run
 
     await movies.deleteMany({});
