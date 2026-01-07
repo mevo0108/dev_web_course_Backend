@@ -6,7 +6,13 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 
-const intApp = async () => {
+const myAsyncFunction = () => {
+    const pr = new Promise((resolve) => {
+        resolve(true);
+    });
+    return pr;
+}
+const intApp = () => {
     const promise = new Promise((resolve, reject) => {
 
         app.use(express.urlencoded({ extended: false }));
@@ -27,11 +33,6 @@ const intApp = async () => {
 
     });
     return promise;
-
 };
-
-
-
-
 
 module.exports = intApp();

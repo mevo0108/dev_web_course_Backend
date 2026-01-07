@@ -23,7 +23,7 @@ Content-Type: application/json
 
 ### DELETE A MOVIE BY ID
 
-DELETE http://localhost:3000/movie/693e8810cd0f8fef6b4c7357 
+DELETE http://localhost:3000/movie/695e34140fa5c292eb0f804
 
 ### UPDATE A MOVIE BY I
 
