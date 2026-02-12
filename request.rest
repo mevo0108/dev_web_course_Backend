@@ -9,7 +9,7 @@ GET http://localhost:3000/movie?year=2010
 
 ### GET MOVIE BY ID
 
-GET http://localhost:3000/movie/693e8818cd0f8fef6b4c7359 
+GET http://localhost:3000/movie/6983534fb16e43e58c8dda72 
 
 ### CREATE A NEW MOVIE
 
@@ -23,11 +23,11 @@ Content-Type: application/json
 
 ### DELETE A MOVIE BY ID
 
-DELETE http://localhost:3000/movie/693e8810cd0f8fef6b4c7357 
+DELETE http://localhost:3000/movie/6983534fb16e43e58c8dda72
 
-### UPDATE A MOVIE BY I
+### UPDATE A MOVIE BY ID
 
-PUT http://localhost:3000/movie/693e8818cd0f8fef6b4c7359
+PUT http://localhost:3000/movie/695adaab5bc9af247d577418
 Content-Type: application/json
 
 {
