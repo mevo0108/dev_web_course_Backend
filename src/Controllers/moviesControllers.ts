@@ -1,11 +1,11 @@
-const movieModel = require('../models/moviesModel');
+import movieModel from '../models/moviesModel';
+import { Request, Response } from 'express';
 
-
-const getAllMovies = async (req, res) => {
+const getAllMovies = async (req: Request, res: Response) => {
     try {
         const year = req.query.year; // to filter by year if provided
         if (year) {
-            const moviesByYear = await movieModel.find({ year: year });
+            const moviesByYear = await movieModel.find({ year: Number(year) });
             return res.json(moviesByYear);
         }
         const movies = await movieModel.find();
@@ -16,7 +16,7 @@ const getAllMovies = async (req, res) => {
     }
 };
 
-const getMovieById = async (req, res) => {
+const getMovieById = async (req: Request, res: Response) => {
     const id = req.params.id;
     try {
         const movie = await movieModel.findById(id);
@@ -30,7 +30,7 @@ const getMovieById = async (req, res) => {
     }
 };
 
-const createMovie = async (req, res) => {
+const createMovie = async (req: Request, res: Response) => {
     const movieData = req.body; // Assuming body-parser middleware is used
     console.log('Received movie data:', movieData);
     try {
@@ -42,20 +42,19 @@ const createMovie = async (req, res) => {
     }
 };
 
-const deleteMovie = async (req, res) => {
+const deleteMovie = async (req: Request, res: Response) => {
     const idDeletedMovie = req.params.id;
 
     try {
         const deletedMovie = await movieModel.findByIdAndDelete(idDeletedMovie);
-        res.json({ message: `Movie deleted successfully` });
+        res.json({ message: `Movie ${deletedMovie?.title} deleted successfully` });
     } catch (err) {
         console.error(err);
         res.status(500).json("error deleting movie");
     }
 };
 
-
-const updateMovie = async (req, res) => {
+const updateMovie = async (req: Request, res: Response) => {
     const id = req.params.id;
     const updatedMovieData = req.body;
 
@@ -72,7 +71,7 @@ const updateMovie = async (req, res) => {
     }
 };
 
-module.exports = {
+export default {
     getAllMovies,
     getMovieById,
     createMovie,

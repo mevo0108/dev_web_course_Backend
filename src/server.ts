@@ -1,7 +1,8 @@
-const initApp = require('./index');
+import initApp from './index';
 
 const port = process.env.PORT || 3000;
-initApp.then((app) => {
+
+initApp().then((app) => {
     app.listen(port, () => {
         console.log(`Example app listening at http://localhost:${port}`);
     });

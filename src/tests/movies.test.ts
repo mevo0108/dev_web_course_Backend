@@ -1,8 +1,14 @@
-const request = require('supertest');
-const initApp = require('../index'); // Adjust the path as necessary
-const movies = require('../models/moviesModel');
+import request from 'supertest';
+import initApp from '../index'; // Adjust the path as necessary
+import movies from '../models/moviesModel';
+import { Express } from 'express';
 
-var testData = [
+
+let app: Express;
+
+type MovieTestData = { title: string; year: number; _id?: string; };
+
+const testData: MovieTestData[] = [
     {
         title: "Inception",
         year: 2010
@@ -15,11 +21,11 @@ var testData = [
         title: "Interstellar",
         year: 2014
     }
-
 ]
-let app;
+
+
 beforeAll(async () => {
-    app = await initApp;
+    app = await initApp();
     // Any setup needed before tests run
 
     await movies.deleteMany({});
@@ -81,19 +87,22 @@ describe('Movies API', () => {
         expect(response.body._id).toBe(testData[0]._id);
     });
 
+    test("test get movie by invalid id format", async () => {
+        const response = await request(app).get('/movie/5469842345698745');
+        expect(response.statusCode).toBe(500);
+        expect(response.body).toBe("error retrieving movie");
+    });
 
     test("test put movie by id", async () => {
         testData[0].year = 2010;
-        const updatedData = {
-            title: "Inception Updated",
-            year: 2012
-        };
+        testData[0].title = "Inception Updated";
         const response = await request(app)
             .put('/movie/' + testData[0]._id)
             .send(testData[0]);
         expect(response.statusCode).toBe(200);
         expect(response.body.title).toBe(testData[0].title);
         expect(response.body.year).toBe(testData[0].year);
+        expect(response.body._id).toBe(testData[0]._id);
     });
 
 
@@ -104,6 +113,21 @@ describe('Movies API', () => {
 
         const getResponse = await request(app).get('/movie/' + testData[0]._id);
         expect(getResponse.statusCode).toBe(404);
+    });
+
+
+
+    test("test missing DATABASE_URL env var", async () => {
+        const originalDbUrl = process.env.DATABASE_URL;
+        delete process.env.DATABASE_URL;
+
+        try {
+            await initApp();
+        } catch (err) {
+            expect(err).toBe('DATABASE_URL is not defined in environment variables');
+        }
+
+        process.env.DATABASE_URL = originalDbUrl;
     });
 
 });
