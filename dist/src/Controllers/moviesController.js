@@ -36,4 +36,4 @@ exports.default = {
     deleteMovie,
     updateMovie
 };
-//# sourceMappingURL=moviesControllers.js.map
+//# sourceMappingURL=moviesController.js.map

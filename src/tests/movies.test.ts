@@ -90,7 +90,7 @@ describe('Movies API', () => {
     test("test get movie by invalid id format", async () => {
         const response = await request(app).get('/movie/5469842345698745');
         expect(response.statusCode).toBe(500);
-        expect(response.body).toBe("error retrieving movie");
+        expect(response.body).toBe("error retrieving data");
     });
 
     test("test put movie by id", async () => {

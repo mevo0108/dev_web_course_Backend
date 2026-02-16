@@ -18,16 +18,22 @@ const moviesModel_1 = __importDefault(require("../models/moviesModel"));
 let app;
 const testData = [
     {
-        title: "Inception",
-        year: 2010
+        messsage: "Great post!",
+        movieId: "11111",
+        userId: "22222",
+        postedAt: new Date(Date.now()),
     },
     {
-        title: "The Matrix",
-        year: 1999
+        messsage: "I totally agree with you.",
+        movieId: "333333",
+        userId: "444444",
+        postedAt: new Date(Date.now()),
     },
     {
-        title: "Interstellar",
-        year: 2014
+        messsage: "Thanks for sharing your thoughts.",
+        movieId: "333333",
+        userId: "444444",
+        postedAt: new Date(Date.now()),
     }
 ];
 beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
@@ -40,7 +46,7 @@ afterAll((done) => {
     console.log('Finished Movies API tests.');
     done();
 });
-describe('Movies API', () => {
+describe('Comments API', () => {
     test("test get all empty DB ", () => __awaiter(void 0, void 0, void 0, function* () {
         // Your test code here
         console.log("test is running");
@@ -48,54 +54,58 @@ describe('Movies API', () => {
         expect(response.statusCode).toBe(200);
         expect(response.body).toEqual([]);
     }));
-    test("test add a movie", () => __awaiter(void 0, void 0, void 0, function* () {
-        //add all test data
-        for (const movie of testData) {
+    test("Create a comment", () => __awaiter(void 0, void 0, void 0, function* () {
+        for (const comment of testData) {
             const response = yield (0, supertest_1.default)(app)
-                .post('/movie')
-                .send(movie);
+                .post('/comment')
+                .send(comment);
             expect(response.statusCode).toBe(201);
-            expect(response.body).toMatchObject(movie);
+            expect(response.body).toMatchObject({
+                messsage: comment.messsage,
+                movieId: comment.movieId,
+                userId: comment.userId,
+                postedAt: comment.postedAt,
+            });
         }
     }));
-    test("test get all movies after adding", () => __awaiter(void 0, void 0, void 0, function* () {
-        const response = yield (0, supertest_1.default)(app).get('/movie');
+    test("test get all Comments after adding", () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield (0, supertest_1.default)(app).get('/comment');
         expect(response.statusCode).toBe(200);
         expect(response.body.length).toBe(testData.length);
     }));
-    test("test get movie by filter", () => __awaiter(void 0, void 0, void 0, function* () {
-        const movie = testData[0];
-        const response = yield (0, supertest_1.default)(app).get('/movie?year=' + movie.year);
+    test("test get comment by MovieID", () => __awaiter(void 0, void 0, void 0, function* () {
+        const comment = testData[0];
+        const response = yield (0, supertest_1.default)(app).get('/comment?movieId=' + comment.movieId);
         expect(response.statusCode).toBe(200);
         expect(response.body.length).toBe(1);
-        expect(response.body[0].year).toBe(movie.year);
+        expect(response.body[0].movieId).toBe(comment.movieId);
         testData[0]._id = response.body[0]._id; // Save the ID for later tests
     }));
-    test("test get movie by id", () => __awaiter(void 0, void 0, void 0, function* () {
-        const response = yield (0, supertest_1.default)(app).get('/movie/' + testData[0]._id);
+    test("test get comment by id", () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield (0, supertest_1.default)(app).get('/comment/' + testData[0]._id);
         expect(response.statusCode).toBe(200);
         expect(response.body._id).toBe(testData[0]._id);
     }));
-    test("test get movie by invalid id format", () => __awaiter(void 0, void 0, void 0, function* () {
-        const response = yield (0, supertest_1.default)(app).get('/movie/5469842345698745');
+    test("test get comment by invalid id format", () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield (0, supertest_1.default)(app).get('/comment/5469842345698745');
         expect(response.statusCode).toBe(500);
-        expect(response.body).toBe("error retrieving data");
+        expect(response.body).toBe("error retrieving comment");
     }));
-    test("test put movie by id", () => __awaiter(void 0, void 0, void 0, function* () {
-        testData[0].year = 2010;
-        testData[0].title = "Inception Updated";
+    test("test put comment by id", () => __awaiter(void 0, void 0, void 0, function* () {
+        testData[0].messsage = "Updated comment";
         const response = yield (0, supertest_1.default)(app)
-            .put('/movie/' + testData[0]._id)
+            .put('/comment/' + testData[0]._id)
             .send(testData[0]);
         expect(response.statusCode).toBe(200);
-        expect(response.body.title).toBe(testData[0].title);
-        expect(response.body.year).toBe(testData[0].year);
+        expect(response.body.messsage).toBe(testData[0].messsage);
+        expect(response.body.movieId).toBe(testData[0].movieId);
+        expect(response.body.userId).toBe(testData[0].userId);
         expect(response.body._id).toBe(testData[0]._id);
     }));
-    test("test delete a movie", () => __awaiter(void 0, void 0, void 0, function* () {
-        const response = yield (0, supertest_1.default)(app).delete('/movie/' + testData[0]._id);
+    test("test delete a comment", () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield (0, supertest_1.default)(app).delete('/comment/' + testData[0]._id);
         expect(response.statusCode).toBe(200);
-        const getResponse = yield (0, supertest_1.default)(app).get('/movie/' + testData[0]._id);
+        const getResponse = yield (0, supertest_1.default)(app).get('/comment/' + testData[0]._id);
         expect(getResponse.statusCode).toBe(404);
     }));
     test("test missing DATABASE_URL env var", () => __awaiter(void 0, void 0, void 0, function* () {
@@ -110,4 +120,4 @@ describe('Movies API', () => {
         process.env.DATABASE_URL = originalDbUrl;
     }));
 });
-//# sourceMappingURL=movies.test.js.map
+//# sourceMappingURL=comments.test.js.map
