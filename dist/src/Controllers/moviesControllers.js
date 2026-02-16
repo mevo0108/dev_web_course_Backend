@@ -13,72 +13,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const moviesModel_1 = __importDefault(require("../models/moviesModel"));
+const baseController_1 = __importDefault(require("./baseController"));
 const getAllMovies = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const year = req.query.year; // to filter by year if provided
-        if (year) {
-            const moviesByYear = yield moviesModel_1.default.find({ year: Number(year) });
-            return res.json(moviesByYear);
-        }
-        const movies = yield moviesModel_1.default.find();
-        res.json(movies);
-    }
-    catch (err) {
-        console.error(err);
-        res.status(500).json("error retrieving movies");
-    }
+    baseController_1.default.getAll(req, res, moviesModel_1.default);
 });
 const getMovieById = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = req.params.id;
-    try {
-        const movie = yield moviesModel_1.default.findById(id);
-        if (!movie) {
-            return res.status(404).json({ message: "Movie not found" });
-        }
-        res.json(movie);
-    }
-    catch (err) {
-        console.error(err);
-        res.status(500).json("error retrieving movie");
-    }
+    baseController_1.default.getById(req, res, moviesModel_1.default);
 });
 const createMovie = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const movieData = req.body; // Assuming body-parser middleware is used
-    console.log('Received movie data:', movieData);
-    try {
-        const newMovie = yield moviesModel_1.default.create(movieData);
-        res.status(201).json(newMovie);
-    }
-    catch (err) {
-        console.error(err);
-        res.status(500).json("error creating movie");
-    }
+    baseController_1.default.create(req, res, moviesModel_1.default);
 });
 const deleteMovie = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const idDeletedMovie = req.params.id;
-    try {
-        const deletedMovie = yield moviesModel_1.default.findByIdAndDelete(idDeletedMovie);
-        res.json({ message: `Movie ${deletedMovie === null || deletedMovie === void 0 ? void 0 : deletedMovie.title} deleted successfully` });
-    }
-    catch (err) {
-        console.error(err);
-        res.status(500).json("error deleting movie");
-    }
+    baseController_1.default.del(req, res, moviesModel_1.default);
 });
 const updateMovie = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const id = req.params.id;
-    const updatedMovieData = req.body;
-    try {
-        // Implementation for updating the movie goes here
-        const movie = yield moviesModel_1.default.findByIdAndUpdate(id, updatedMovieData, {
-            new: true,
-        });
-        res.json(movie);
-    }
-    catch (err) {
-        console.error(err);
-        res.status(500).json("error updating movie");
-    }
+    baseController_1.default.update(req, res, moviesModel_1.default);
 });
 exports.default = {
     getAllMovies,
