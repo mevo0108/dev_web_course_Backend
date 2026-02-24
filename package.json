@@ -12,7 +12,6 @@
     "testComments": "tsc && jest --runInBand --detectOpenHandles --forceExit ./src/tests/comments.test.ts --coverage",
     "testMovies": "tsc && jest --runInBand --detectOpenHandles --forceExit ./src/tests/movies.test.ts --coverage",
     "testAuth": "tsc && jest --runInBand --detectOpenHandles --forceExit ./src/tests/auth.test.ts --coverage"
-
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
@@ -23,6 +22,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
+    "@types/bcrypt": "^6.0.0",
     "@types/express": "^4.17.1",
     "@types/jest": "^30.0.0",
     "@types/supertest": "^6.0.3",

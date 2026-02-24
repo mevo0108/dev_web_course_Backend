@@ -14,25 +14,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const supertest_1 = __importDefault(require("supertest"));
 const index_1 = __importDefault(require("../index")); // Adjust the path as necessary
+const userModel_1 = __importDefault(require("../models/userModel"));
 let app;
-const testData = [
-    {
-        email: "testuser@example.com",
-        password: "testpassword"
-    },
-    {
-        email: "testmatrix@example.com",
-        password: "matrixpassword"
-    },
-    {
-        email: "testinterstellar@example.com",
-        password: "interstellarpassword"
-    }
-];
 beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
     app = yield (0, index_1.default)();
     // Any setup needed before tests run
-    // await auth.deleteMany({});
+    yield userModel_1.default.deleteMany({});
 }));
 afterAll((done) => {
     // Any cleanup needed after tests run

@@ -1,6 +1,6 @@
 import request from 'supertest';
 import initApp from '../index'; // Adjust the path as necessary
-// import auth from '../models/authModel';
+import user from '../models/userModel';
 import { Express } from 'express';
 
 let app: Express;
@@ -10,7 +10,7 @@ beforeAll(async () => {
     app = await initApp();
     // Any setup needed before tests run
 
-    // await auth.deleteMany({});
+    await user.deleteMany({});
 });
 
 afterAll((done) => {
