@@ -33,6 +33,7 @@ class BaseController {
 
     async getById(req: Request, res: Response) {
         const id = req.params.id;
+
         if (!mongoose.Types.ObjectId.isValid(id as string)) {
             return res.status(400).json({ message: "Invalid ID format" });
         }
@@ -44,7 +45,7 @@ class BaseController {
             res.json(data);
         } catch (err) {
             console.error(err);
-            res.status(500).json("error retrieving data");
+            res.status(500).json({ message: "error retrieving data" });
         }
     };
 
@@ -56,7 +57,7 @@ class BaseController {
             res.status(201).json(newMovie);
         } catch (err) {
             console.error(err);
-            res.status(500).json("error creating data");
+            res.status(500).json({ message: "error creating data" });
         }
     };
 
@@ -68,7 +69,7 @@ class BaseController {
             res.json({ message: `Data ${deletedData?.title} deleted successfully` });
         } catch (err) {
             console.error(err);
-            res.status(500).json("error deleting data");
+            res.status(500).json({ message: "error deleting data" });
         }
     };
 
@@ -85,7 +86,7 @@ class BaseController {
 
         } catch (err) {
             console.error(err);
-            res.status(500).json("error updating data");
+            res.status(500).json({ message: "error updating data" });
         }
     };
 }

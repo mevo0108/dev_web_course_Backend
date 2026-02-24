@@ -51,7 +51,7 @@ class BaseController {
             }
             catch (err) {
                 console.error(err);
-                res.status(500).json("error retrieving data");
+                res.status(500).json({ message: "error retrieving data" });
             }
         });
     }
@@ -66,7 +66,7 @@ class BaseController {
             }
             catch (err) {
                 console.error(err);
-                res.status(500).json("error creating data");
+                res.status(500).json({ message: "error creating data" });
             }
         });
     }
@@ -80,7 +80,7 @@ class BaseController {
             }
             catch (err) {
                 console.error(err);
-                res.status(500).json("error deleting data");
+                res.status(500).json({ message: "error deleting data" });
             }
         });
     }
@@ -98,7 +98,7 @@ class BaseController {
             }
             catch (err) {
                 console.error(err);
-                res.status(500).json("error updating data");
+                res.status(500).json({ message: "error updating data" });
             }
         });
     }

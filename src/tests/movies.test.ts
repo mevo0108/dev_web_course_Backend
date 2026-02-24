@@ -3,10 +3,13 @@ import initApp from '../index'; // Adjust the path as necessary
 import movies from '../models/moviesModel';
 import { Express } from 'express';
 
-
 let app: Express;
 
-type MovieTestData = { title: string; year: number; _id?: string; };
+type MovieTestData = {
+    title: string;
+    year: number;
+    _id?: string;
+};
 
 const testData: MovieTestData[] = [
     {
