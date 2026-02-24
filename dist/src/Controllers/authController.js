@@ -18,6 +18,11 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const sendError = (res, message) => {
     res.status(400).json({ error: message });
 };
+const generateToken = (userId) => {
+    const jwtSecret = process.env.JWT_SECRET;
+    const jwtExpiresIn = process.env.JWT_EXPIRES_IN;
+    return jsonwebtoken_1.default.sign({ userId }, jwtSecret, { expiresIn: jwtExpiresIn });
+};
 const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // Your registration logic here
     //extract email and password from req.body
@@ -33,9 +38,7 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         //if user does not exist, create a new user in the database with hashed password
         const user = yield userModel_1.default.create({ email, password: encryptedPassword });
         //generate a JWT token for the user
-        const jwtSecret = process.env.JWT_SECRET;
-        const jwtExpiresIn = (process.env.JWT_EXPIRES_IN);
-        const accessToken = jsonwebtoken_1.default.sign({ userId: user._id, email: user.email }, jwtSecret, { expiresIn: jwtExpiresIn });
+        const accessToken = generateToken(user.id);
         //return the token in the response
         res.status(201).json({ "token": accessToken });
     }
@@ -44,10 +47,30 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
     res.status(500).send("not implemented yet");
 });
-const login = (req, res) => {
+const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     // Your login logic here
-    res.status(500).json({ token: "not implemented yet" });
-};
+    const email = req.body.email;
+    const password = req.body.password;
+    if (!email || !password) {
+        return sendError(res, "Email and password are required");
+    }
+    try {
+        const user = yield userModel_1.default.findOne({ email });
+        if (!user) {
+            return sendError(res, "Invalid email or password");
+        }
+        const isMatch = yield bcrypt_1.default.compare(password, user.password);
+        if (!isMatch) {
+            return sendError(res, "Invalid email or password");
+        }
+        //generate a JWT token for the user
+        const accessToken = generateToken(user.id);
+        res.status(200).json({ "token": accessToken });
+    }
+    catch (error) {
+        return sendError(res, "Login failed");
+    }
+});
 exports.default = {
     register,
     login,

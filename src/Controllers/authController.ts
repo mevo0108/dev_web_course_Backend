@@ -6,6 +6,12 @@ import jwt from 'jsonwebtoken';
 const sendError = (res: Response, message: string) => {
     res.status(400).json({ error: message });
 }
+const generateToken = (userId: string): string => {
+    const jwtSecret = process.env.JWT_SECRET as jwt.Secret;
+    const jwtExpiresIn = process.env.JWT_EXPIRES_IN as jwt.SignOptions['expiresIn'];
+
+    return jwt.sign({ userId }, jwtSecret, { expiresIn: jwtExpiresIn });
+}
 
 const register = async (req: Request, res: Response) => {
     // Your registration logic here
@@ -27,13 +33,7 @@ const register = async (req: Request, res: Response) => {
 
         //generate a JWT token for the user
 
-        const jwtSecret = process.env.JWT_SECRET as jwt.Secret;
-        const jwtExpiresIn = (process.env.JWT_EXPIRES_IN) as jwt.SignOptions['expiresIn'];
-
-        const accessToken = jwt.sign(
-            { userId: user._id, email: user.email },
-            jwtSecret,
-            { expiresIn: jwtExpiresIn });
+        const accessToken = generateToken(user.id);
 
         //return the token in the response
         res.status(201).json({ "token": accessToken });
@@ -46,13 +46,34 @@ const register = async (req: Request, res: Response) => {
 
     res.status(500).send("not implemented yet");
 };
-const login = (req: Request, res: Response) => {
+const login = async (req: Request, res: Response) => {
     // Your login logic here
-    res.status(500).json({ token: "not implemented yet" });
+    const email = req.body.email;
+    const password = req.body.password;
+
+    if (!email || !password) {
+        return sendError(res, "Email and password are required");
+    }
+    try {
+        const user = await User.findOne({ email });
+        if (!user) {
+            return sendError(res, "Invalid email or password");
+        }
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return sendError(res, "Invalid email or password");
+        }
+
+        //generate a JWT token for the user
+        const accessToken = generateToken(user.id);
+        res.status(200).json({ "token": accessToken });
+    }
+    catch (error) {
+        return sendError(res, "Login failed");
+    }
 };
 
 export default {
     register,
     login,
-    
 };

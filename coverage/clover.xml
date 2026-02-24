@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1771927591131" clover="3.2.0">
-  <project timestamp="1771927591132" name="All files">
-    <metrics statements="130" coveredstatements="87" conditionals="16" coveredconditionals="4" methods="15" coveredmethods="8" elements="161" coveredelements="99" complexity="0" loc="130" ncloc="130" packages="4" files="11" classes="11"/>
+<coverage generated="1771928548730" clover="3.2.0">
+  <project timestamp="1771928548730" name="All files">
+    <metrics statements="145" coveredstatements="98" conditionals="24" coveredconditionals="9" methods="17" coveredmethods="10" elements="186" coveredelements="117" complexity="0" loc="145" ncloc="145" packages="4" files="11" classes="11"/>
     <package name="src">
       <metrics statements="25" coveredstatements="23" conditionals="2" coveredconditionals="1" methods="5" coveredmethods="4"/>
       <file name="index.ts" path="C:\Users\berre\projects\המכללה למנהל 2025\dev_web_course_2026\dev_web_course_Backend\src\index.ts">
@@ -34,32 +34,47 @@
       </file>
     </package>
     <package name="src.Controllers">
-      <metrics statements="72" coveredstatements="31" conditionals="14" coveredconditionals="3" methods="10" coveredmethods="4"/>
+      <metrics statements="87" coveredstatements="42" conditionals="22" coveredconditionals="8" methods="12" coveredmethods="6"/>
       <file name="authController.ts" path="C:\Users\berre\projects\המכללה למנהל 2025\dev_web_course_2026\dev_web_course_Backend\src\Controllers\authController.ts">
-        <metrics statements="23" coveredstatements="20" conditionals="4" coveredconditionals="3" methods="4" coveredmethods="3"/>
+        <metrics statements="38" coveredstatements="31" conditionals="12" coveredconditionals="8" methods="6" coveredmethods="5"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
         <line num="7" count="0" type="stmt"/>
-        <line num="10" count="1" type="stmt"/>
-        <line num="13" count="1" type="stmt"/>
-        <line num="14" count="1" type="stmt"/>
-        <line num="17" count="1" type="cond" truecount="3" falsecount="1"/>
-        <line num="18" count="0" type="stmt"/>
-        <line num="21" count="1" type="stmt"/>
-        <line num="23" count="1" type="stmt"/>
-        <line num="24" count="1" type="stmt"/>
-        <line num="26" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="13" count="2" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="23" count="1" type="cond" truecount="3" falsecount="1"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
         <line num="30" count="1" type="stmt"/>
-        <line num="31" count="1" type="stmt"/>
-        <line num="33" count="1" type="stmt"/>
+        <line num="32" count="1" type="stmt"/>
+        <line num="36" count="1" type="stmt"/>
         <line num="39" count="1" type="stmt"/>
         <line num="44" count="0" type="stmt"/>
         <line num="47" count="1" type="stmt"/>
         <line num="49" count="1" type="stmt"/>
         <line num="51" count="1" type="stmt"/>
-        <line num="54" count="1" type="stmt"/>
+        <line num="52" count="1" type="stmt"/>
+        <line num="54" count="1" type="cond" truecount="3" falsecount="1"/>
+        <line num="55" count="0" type="stmt"/>
+        <line num="57" count="1" type="stmt"/>
+        <line num="58" count="1" type="stmt"/>
+        <line num="59" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="60" count="0" type="stmt"/>
+        <line num="62" count="1" type="stmt"/>
+        <line num="63" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="64" count="0" type="stmt"/>
+        <line num="68" count="1" type="stmt"/>
+        <line num="69" count="1" type="stmt"/>
+        <line num="72" count="0" type="stmt"/>
+        <line num="76" count="1" type="stmt"/>
       </file>
       <file name="baseController.ts" path="C:\Users\berre\projects\המכללה למנהל 2025\dev_web_course_2026\dev_web_course_Backend\src\Controllers\baseController.ts">
         <metrics statements="41" coveredstatements="3" conditionals="10" coveredconditionals="0" methods="6" coveredmethods="1"/>
