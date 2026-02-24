@@ -38,7 +38,7 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         //if user does not exist, create a new user in the database with hashed password
         const user = yield userModel_1.default.create({ email, password: encryptedPassword });
         //generate a JWT token for the user
-        const accessToken = generateToken(user.id);
+        const accessToken = generateToken(user._id.toString());
         //return the token in the response
         res.status(201).json({ "token": accessToken });
     }
@@ -64,7 +64,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             return sendError(res, "Invalid email or password");
         }
         //generate a JWT token for the user
-        const accessToken = generateToken(user.id);
+        const accessToken = generateToken(user._id.toString());
         res.status(200).json({ "token": accessToken });
     }
     catch (error) {
