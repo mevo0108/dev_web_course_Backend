@@ -78,8 +78,8 @@ describe('Movies API', () => {
     }));
     test("test get movie by invalid id format", () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield (0, supertest_1.default)(app).get('/movie/5469842345698745');
-        expect(response.statusCode).toBe(500);
-        expect(response.body).toBe("error retrieving data");
+        expect(response.statusCode).toBe(400);
+        expect(response.body.message).toBe("Invalid ID format");
     }));
     test("test put movie by id", () => __awaiter(void 0, void 0, void 0, function* () {
         testData[0].year = 2010;

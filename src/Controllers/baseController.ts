@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from 'express';
+import mongoose from 'mongoose';
 
 // Base controller with common logic for all controllers
 // Generic error handling, logging, etc. can be implemented here
@@ -32,6 +33,9 @@ class BaseController {
 
     async getById(req: Request, res: Response) {
         const id = req.params.id;
+        if (!mongoose.Types.ObjectId.isValid(id as string)) {
+            return res.status(400).json({ message: "Invalid ID format" });
+        }
         try {
             const data = await this.model.findById(id);
             if (!data) {

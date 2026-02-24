@@ -98,8 +98,8 @@ describe('Comments API', () => {
 
     test("test get comment by invalid id format", async () => {
         const response = await request(app).get('/comment/5469842345698745');
-        expect(response.statusCode).toBe(500);
-        expect(response.body).toBe("error retrieving data");
+        expect(response.statusCode).toBe(400);
+        expect(response.body.message).toBe("Invalid ID format");
     });
 
     test("test put comment by id", async () => {
