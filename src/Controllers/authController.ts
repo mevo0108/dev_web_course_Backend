@@ -23,18 +23,14 @@ const register = async (req: Request, res: Response) => {
     if (!email || !password) {
         return sendError(res, "Email and password are required");
     }
-
     try {
 
         const salt = await bcrypt.genSalt(10);
         const encryptedPassword = await bcrypt.hash(password, salt);
         //if user does not exist, create a new user in the database with hashed password
         const user = await User.create({ email, password: encryptedPassword });
-
         //generate a JWT token for the user
-
-        const accessToken = generateToken(user.id);
-
+        const accessToken = generateToken(user._id.toString());
         //return the token in the response
         res.status(201).json({ "token": accessToken });
 
@@ -46,6 +42,7 @@ const register = async (req: Request, res: Response) => {
 
     res.status(500).send("not implemented yet");
 };
+
 const login = async (req: Request, res: Response) => {
     // Your login logic here
     const email = req.body.email;
@@ -65,7 +62,7 @@ const login = async (req: Request, res: Response) => {
         }
 
         //generate a JWT token for the user
-        const accessToken = generateToken(user.id);
+        const accessToken = generateToken(user._id.toString());
         res.status(200).json({ "token": accessToken });
     }
     catch (error) {
