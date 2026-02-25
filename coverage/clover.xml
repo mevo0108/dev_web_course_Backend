@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1771928982831" clover="3.2.0">
-  <project timestamp="1771928982831" name="All files">
-    <metrics statements="145" coveredstatements="98" conditionals="24" coveredconditionals="9" methods="17" coveredmethods="10" elements="186" coveredelements="117" complexity="0" loc="145" ncloc="145" packages="4" files="11" classes="11"/>
+<coverage generated="1772016247169" clover="3.2.0">
+  <project timestamp="1772016247169" name="All files">
+    <metrics statements="160" coveredstatements="116" conditionals="28" coveredconditionals="12" methods="18" coveredmethods="12" elements="206" coveredelements="140" complexity="0" loc="160" ncloc="160" packages="5" files="12" classes="12"/>
     <package name="src">
-      <metrics statements="25" coveredstatements="23" conditionals="2" coveredconditionals="1" methods="5" coveredmethods="4"/>
+      <metrics statements="26" coveredstatements="24" conditionals="2" coveredconditionals="1" methods="5" coveredmethods="4"/>
       <file name="index.ts" path="C:\Users\berre\projects\המכללה למנהל 2025\dev_web_course_2026\dev_web_course_Backend\src\index.ts">
-        <metrics statements="25" coveredstatements="23" conditionals="2" coveredconditionals="1" methods="5" coveredmethods="4"/>
+        <metrics statements="26" coveredstatements="24" conditionals="2" coveredconditionals="1" methods="5" coveredmethods="4"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -16,25 +16,26 @@
         <line num="10" count="1" type="stmt"/>
         <line num="12" count="1" type="stmt"/>
         <line num="13" count="1" type="stmt"/>
-        <line num="14" count="1" type="stmt"/>
         <line num="15" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
         <line num="17" count="1" type="stmt"/>
         <line num="19" count="1" type="stmt"/>
-        <line num="20" count="1" type="stmt"/>
-        <line num="21" count="1" type="cond" truecount="1" falsecount="1"/>
-        <line num="22" count="0" type="stmt"/>
-        <line num="23" count="0" type="stmt"/>
-        <line num="25" count="1" type="stmt"/>
-        <line num="28" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="23" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
         <line num="30" count="1" type="stmt"/>
-        <line num="31" count="1" type="stmt"/>
         <line num="32" count="1" type="stmt"/>
-        <line num="35" count="1" type="stmt"/>
-        <line num="38" count="1" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="37" count="1" type="stmt"/>
+        <line num="40" count="1" type="stmt"/>
       </file>
     </package>
     <package name="src.Controllers">
-      <metrics statements="87" coveredstatements="42" conditionals="22" coveredconditionals="8" methods="12" coveredmethods="6"/>
+      <metrics statements="87" coveredstatements="47" conditionals="22" coveredconditionals="8" methods="12" coveredmethods="7"/>
       <file name="authController.ts" path="C:\Users\berre\projects\המכללה למנהל 2025\dev_web_course_2026\dev_web_course_Backend\src\Controllers\authController.ts">
         <metrics statements="38" coveredstatements="31" conditionals="12" coveredconditionals="8" methods="6" coveredmethods="5"/>
         <line num="2" count="1" type="stmt"/>
@@ -77,7 +78,7 @@
         <line num="73" count="1" type="stmt"/>
       </file>
       <file name="baseController.ts" path="C:\Users\berre\projects\המכללה למנהל 2025\dev_web_course_2026\dev_web_course_Backend\src\Controllers\baseController.ts">
-        <metrics statements="41" coveredstatements="3" conditionals="10" coveredconditionals="0" methods="6" coveredmethods="1"/>
+        <metrics statements="41" coveredstatements="8" conditionals="10" coveredconditionals="0" methods="6" coveredmethods="2"/>
         <line num="3" count="1" type="stmt"/>
         <line num="13" count="2" type="stmt"/>
         <line num="20" count="0" type="stmt"/>
@@ -98,11 +99,11 @@
         <line num="45" count="0" type="stmt"/>
         <line num="47" count="0" type="stmt"/>
         <line num="48" count="0" type="stmt"/>
-        <line num="53" count="0" type="stmt"/>
-        <line num="54" count="0" type="stmt"/>
-        <line num="55" count="0" type="stmt"/>
-        <line num="56" count="0" type="stmt"/>
-        <line num="57" count="0" type="stmt"/>
+        <line num="53" count="1" type="stmt"/>
+        <line num="54" count="1" type="stmt"/>
+        <line num="55" count="1" type="stmt"/>
+        <line num="56" count="1" type="stmt"/>
+        <line num="57" count="1" type="stmt"/>
         <line num="59" count="0" type="stmt"/>
         <line num="60" count="0" type="stmt"/>
         <line num="65" count="0" type="stmt"/>
@@ -135,6 +136,25 @@
         <line num="6" count="1" type="stmt"/>
       </file>
     </package>
+    <package name="src.middleware">
+      <metrics statements="13" coveredstatements="11" conditionals="4" coveredconditionals="3" methods="1" coveredmethods="1"/>
+      <file name="authMiddleware.ts" path="C:\Users\berre\projects\המכללה למנהל 2025\dev_web_course_2026\dev_web_course_Backend\src\middleware\authMiddleware.ts">
+        <metrics statements="13" coveredstatements="11" conditionals="4" coveredconditionals="3" methods="1" coveredmethods="1"/>
+        <line num="2" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="9" count="1" type="cond" truecount="3" falsecount="1"/>
+        <line num="10" count="0" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="22" count="1" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+      </file>
+    </package>
     <package name="src.models">
       <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="commentsModel.ts" path="C:\Users\berre\projects\המכללה למנהל 2025\dev_web_course_2026\dev_web_course_Backend\src\models\commentsModel.ts">
@@ -157,18 +177,18 @@
       </file>
     </package>
     <package name="src.routes">
-      <metrics statements="24" coveredstatements="24" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <metrics statements="25" coveredstatements="25" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="CommentsRoute.ts" path="C:\Users\berre\projects\המכללה למנהל 2025\dev_web_course_2026\dev_web_course_Backend\src\routes\CommentsRoute.ts">
         <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
         <line num="8" count="1" type="stmt"/>
-        <line num="9" count="1" type="stmt"/>
-        <line num="12" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
         <line num="13" count="1" type="stmt"/>
-        <line num="14" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
         <line num="17" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
       </file>
       <file name="authRoute.ts" path="C:\Users\berre\projects\המכללה למנהל 2025\dev_web_course_2026\dev_web_course_Backend\src\routes\authRoute.ts">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
@@ -180,16 +200,17 @@
         <line num="12" count="1" type="stmt"/>
       </file>
       <file name="moviesRoute.ts" path="C:\Users\berre\projects\המכללה למנהל 2025\dev_web_course_2026\dev_web_course_Backend\src\routes\moviesRoute.ts">
-        <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <metrics statements="10" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
-        <line num="4" count="1" type="stmt"/>
-        <line num="7" count="1" type="stmt"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="5" count="1" type="stmt"/>
         <line num="8" count="1" type="stmt"/>
-        <line num="11" count="1" type="stmt"/>
-        <line num="12" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
         <line num="13" count="1" type="stmt"/>
         <line num="15" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
       </file>
     </package>
   </project>

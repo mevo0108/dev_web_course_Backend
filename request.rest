@@ -14,6 +14,7 @@ GET http://localhost:3000/movie/6983534fb16e43e58c8dda72
 ### CREATE A NEW MOVIE
 
 POST http://localhost:3000/movie
+Authorization: Bearer <token>
 Content-Type: application/json
 
 {

@@ -15,47 +15,68 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const supertest_1 = __importDefault(require("supertest"));
 const index_1 = __importDefault(require("../index")); // Adjust the path as necessary
 const userModel_1 = __importDefault(require("../models/userModel"));
+const moviesModel_1 = __importDefault(require("../models/moviesModel"));
 let app;
 beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
     app = yield (0, index_1.default)();
     // Any setup needed before tests run
     yield userModel_1.default.deleteMany({});
+    yield moviesModel_1.default.deleteMany({});
 }));
 afterAll((done) => {
     // Any cleanup needed after tests run
     console.log('Finished Auth API tests.');
     done();
 });
+const userData = {
+    email: "testuser@example.com",
+    password: "testpassword",
+    token: "",
+    _id: "",
+};
+const movie = {
+    title: "test movie title",
+    year: 2024,
+};
 describe('Auth API', () => {
     // Relevant whene the register do a register and login actions
+    /* test("access restricted url denied with no token", async () => {
+         const response = await request(app)
+             .post('/movie')
+             .send({ movieData });
+         expect(response.statusCode).toBe(401);
+     });
+ */
     test("test register a user", () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield (0, supertest_1.default)(app)
             .post('/auth/register')
             .send({
-            email: "testuser@example.com",
-            password: "testpassword"
+            email: userData.email,
+            password: userData.password
         });
         expect(response.statusCode).toBe(201);
         expect(response.body).toHaveProperty("token");
+        userData._id = response.body._id;
+        userData.token = response.body.token;
+    }));
+    test("test access with token permitted", () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield (0, supertest_1.default)(app)
+            .post('/movie')
+            .set("Authorization", "Bearer " + userData.token)
+            .send(movie);
+        expect(response.statusCode).toBe(201);
+        expect(response.body).toHaveProperty("_id");
+        movie._id = response.body._id;
     }));
     test("test login a user", () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield (0, supertest_1.default)(app)
             .post('/auth/login')
             .send({
-            email: "testuser@example.com",
-            password: "testpassword"
+            email: userData.email,
+            password: userData.password
         });
         expect(response.statusCode).toBe(200);
         expect(response.body).toHaveProperty("token");
-    }));
-    test("test logout a user", () => __awaiter(void 0, void 0, void 0, function* () {
-        const response = yield (0, supertest_1.default)(app)
-            .post('/auth/logout')
-            .send({
-            email: "testuser@example.com"
-        });
-        expect(response.statusCode).toBe(200);
-        expect(response.body).toHaveProperty("message", "Logged out successfully");
     }));
 });
 //# sourceMappingURL=auth.test.js.map

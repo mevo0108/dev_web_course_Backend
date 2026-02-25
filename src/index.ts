@@ -9,7 +9,9 @@ const app = express();
 
 dotenv.config({ path: '.env.dev' });
 
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
 app.use('/movie', moviesRouter);
 app.use('/comment', commentsRouter);
 app.use('/auth', authRouter);
