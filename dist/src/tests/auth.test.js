@@ -16,6 +16,7 @@ const supertest_1 = __importDefault(require("supertest"));
 const index_1 = __importDefault(require("../index")); // Adjust the path as necessary
 const userModel_1 = __importDefault(require("../models/userModel"));
 const moviesModel_1 = __importDefault(require("../models/moviesModel"));
+const testUtils_1 = require("./testUtils");
 let app;
 beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
     app = yield (0, index_1.default)();
@@ -28,50 +29,40 @@ afterAll((done) => {
     console.log('Finished Auth API tests.');
     done();
 });
-const userData = {
-    email: "testuser@example.com",
-    password: "testpassword",
-    token: "",
-    _id: "",
-};
-const movie = {
-    title: "test movie title",
-    year: 2024,
-};
 describe('Auth API', () => {
     // Relevant whene the register do a register and login actions
     test("access restricted url denied with no token", () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield (0, supertest_1.default)(app)
             .post('/movie')
-            .send({ movie });
+            .send({ movie: testUtils_1.moviesData[0] });
         expect(response.statusCode).toBe(401);
     }));
     test("test register a user", () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield (0, supertest_1.default)(app)
             .post('/auth/register')
             .send({
-            email: userData.email,
-            password: userData.password
+            email: testUtils_1.userData.email,
+            password: testUtils_1.userData.password
         });
         expect(response.statusCode).toBe(201);
         expect(response.body).toHaveProperty("token");
-        userData._id = response.body._id;
-        userData.token = response.body.token;
+        testUtils_1.userData._id = response.body._id;
+        testUtils_1.userData.token = response.body.token;
     }));
     test("test access with token permitted", () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield (0, supertest_1.default)(app)
             .post('/movie')
-            .set("Authorization", "Bearer " + userData.token)
-            .send(movie);
+            .set("Authorization", "Bearer " + testUtils_1.userData.token)
+            .send(testUtils_1.singleMovieData); // Use singleMovieData to avoid modifying moviesData array
         expect(response.statusCode).toBe(201);
         expect(response.body).toHaveProperty("_id");
     }));
     test("test access with modified token restricted", () => __awaiter(void 0, void 0, void 0, function* () {
-        const newToken = userData.token + "m";
+        const newToken = testUtils_1.userData.token + "m";
         const response = yield (0, supertest_1.default)(app)
             .post('/movie')
             .set("Authorization", "Bearer " + newToken)
-            .send(movie);
+            .send(testUtils_1.moviesData[0]); // Use moviesData[0] to avoid modifying singleMovieData --> we can do both.
         expect(response.statusCode).toBe(401);
         expect(response.body).toHaveProperty("error");
     }));
@@ -79,8 +70,8 @@ describe('Auth API', () => {
         const response = yield (0, supertest_1.default)(app)
             .post('/auth/login')
             .send({
-            email: userData.email,
-            password: userData.password
+            email: testUtils_1.userData.email,
+            password: testUtils_1.userData.password
         });
         expect(response.statusCode).toBe(200);
         expect(response.body).toHaveProperty("token");
@@ -88,11 +79,11 @@ describe('Auth API', () => {
     test("test access with token permitted after LOGIN", () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield (0, supertest_1.default)(app)
             .post('/movie')
-            .set("Authorization", "Bearer " + userData.token)
-            .send(movie);
+            .set("Authorization", "Bearer " + testUtils_1.userData.token)
+            .send(testUtils_1.moviesData[0]);
         expect(response.statusCode).toBe(201);
         expect(response.body).toHaveProperty("_id");
-        movie._id = response.body._id;
+        testUtils_1.moviesData[0]._id = response.body._id;
     }));
     //set jest timeout to 10 seconds
     jest.setTimeout(10000); // Set a longer timeout for this test to allow for token expiration
@@ -101,8 +92,8 @@ describe('Auth API', () => {
         yield new Promise(resolve => setTimeout(resolve, 6000)); // Adjust the time as needed
         const response = yield (0, supertest_1.default)(app)
             .post('/movie')
-            .set("Authorization", "Bearer " + userData.token)
-            .send(movie);
+            .set("Authorization", "Bearer " + testUtils_1.userData.token)
+            .send(testUtils_1.moviesData[0]);
         expect(response.statusCode).toBe(401);
         expect(response.body).toHaveProperty("error");
     }));

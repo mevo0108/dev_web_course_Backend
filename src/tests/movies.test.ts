@@ -3,49 +3,17 @@ import initApp from '../index'; // Adjust the path as necessary
 import Movies from '../models/moviesModel';
 import { Express } from 'express';
 import User from '../models/userModel';
+import { userData, moviesData, registerTestUser } from './testUtils';
+
 let app: Express;
 
-type MovieTestData = {
-    title: string;
-    year: number;
-    _id?: string;
-};
-
-const user = {
-    email: "berrebimevo@test.com",
-    password: "testpasswordMovies",
-    token: "",
-    _id: "",
-}
-
-const testData: MovieTestData[] = [
-    {
-        title: "Inception",
-        year: 2010
-    },
-    {
-        title: "The Matrix",
-        year: 1999
-    },
-    {
-        title: "Interstellar",
-        year: 2014
-    }
-]
 
 beforeAll(async () => {
     app = await initApp();
     // Any setup needed before tests run
-    await User.deleteMany({ email: user.email });
     await Movies.deleteMany({});
-    //register a user and save the token for authenticated requests
-    const res = await request(app).post('/auth/register')
-        .send({
-            email: user.email,
-            password: user.password
-        });
-    user._id = res.body._id;
-    user.token = res.body.token;
+    await registerTestUser(app);
+
 });
 
 afterAll((done) => {
@@ -67,10 +35,10 @@ describe('Movies API', () => {
     test("test add a movie", async () => {
         //add all test data
 
-        for (const movie of testData) {
+        for (const movie of moviesData) {
             const response = await request(app)
                 .post('/movie')
-                .set('Authorization', `Bearer ${user.token}`)
+                .set('Authorization', `Bearer ${userData.token}`)
                 .send(movie);
             expect(response.statusCode).toBe(201);
             expect(response.body).toMatchObject(movie);
@@ -83,26 +51,26 @@ describe('Movies API', () => {
 
         const response = await request(app).get('/movie');
         expect(response.statusCode).toBe(200);
-        expect(response.body.length).toBe(testData.length);
+        expect(response.body.length).toBe(moviesData.length);
     });
 
     test("test get movie by filter", async () => {
-        const movie = testData[0];
+        const movie = moviesData[0];
         const response = await request(app).get(
             '/movie?year=' + movie.year
         );
         expect(response.statusCode).toBe(200);
         expect(response.body.length).toBe(1);
         expect(response.body[0].year).toBe(movie.year);
-        testData[0]._id = response.body[0]._id; // Save the ID for later tests
+        moviesData[0]._id = response.body[0]._id; // Save the ID for later tests
 
 
     });
 
     test("test get movie by id", async () => {
-        const response = await request(app).get('/movie/' + testData[0]._id);
+        const response = await request(app).get('/movie/' + moviesData[0]._id);
         expect(response.statusCode).toBe(200);
-        expect(response.body._id).toBe(testData[0]._id);
+        expect(response.body._id).toBe(moviesData[0]._id);
     });
 
     test("test get movie by invalid id format", async () => {
@@ -112,27 +80,27 @@ describe('Movies API', () => {
     });
 
     test("test put movie by id", async () => {
-        testData[0].year = 2010;
-        testData[0].title = "Inception Updated";
+        moviesData[0].year = 2010;
+        moviesData[0].title = "Inception Updated";
         const response = await request(app)
-            .put('/movie/' + testData[0]._id)
-            .set('Authorization', `Bearer ${user.token}`)
-            .send(testData[0]);
+            .put('/movie/' + moviesData[0]._id)
+            .set('Authorization', `Bearer ${userData.token}`)
+            .send(moviesData[0]);
         expect(response.statusCode).toBe(200);
-        expect(response.body.title).toBe(testData[0].title);
-        expect(response.body.year).toBe(testData[0].year);
-        expect(response.body._id).toBe(testData[0]._id);
+        expect(response.body.title).toBe(moviesData[0].title);
+        expect(response.body.year).toBe(moviesData[0].year);
+        expect(response.body._id).toBe(moviesData[0]._id);
     });
 
 
 
     test("test delete a movie", async () => {
         const response = await request(app)
-            .delete('/movie/' + testData[0]._id)
-            .set('Authorization', `Bearer ${user.token}`);
+            .delete('/movie/' + moviesData[0]._id)
+            .set('Authorization', `Bearer ${userData.token}`);
         expect(response.statusCode).toBe(200);
 
-        const getResponse = await request(app).get('/movie/' + testData[0]._id);
+        const getResponse = await request(app).get('/movie/' + moviesData[0]._id);
         expect(getResponse.statusCode).toBe(404);
     });
 

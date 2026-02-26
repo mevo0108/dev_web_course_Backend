@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1772097940782" clover="3.2.0">
-  <project timestamp="1772097940782" name="All files">
-    <metrics statements="160" coveredstatements="141" conditionals="28" coveredconditionals="22" methods="18" coveredmethods="16" elements="206" coveredelements="179" complexity="0" loc="160" ncloc="160" packages="5" files="12" classes="12"/>
+<coverage generated="1772100403020" clover="3.2.0">
+  <project timestamp="1772100403020" name="All files">
+    <metrics statements="172" coveredstatements="153" conditionals="28" coveredconditionals="22" methods="20" coveredmethods="18" elements="220" coveredelements="193" complexity="0" loc="172" ncloc="172" packages="6" files="13" classes="13"/>
     <package name="src">
       <metrics statements="26" coveredstatements="26" conditionals="2" coveredconditionals="2" methods="5" coveredmethods="4"/>
       <file name="index.ts" path="C:\Users\berre\projects\המכללה למנהל 2025\dev_web_course_2026\dev_web_course_Backend\src\index.ts">
@@ -44,22 +44,22 @@
         <line num="6" count="3" type="stmt"/>
         <line num="7" count="0" type="stmt"/>
         <line num="9" count="3" type="stmt"/>
-        <line num="10" count="3" type="stmt"/>
-        <line num="11" count="3" type="stmt"/>
-        <line num="13" count="3" type="stmt"/>
+        <line num="10" count="4" type="stmt"/>
+        <line num="11" count="4" type="stmt"/>
+        <line num="13" count="4" type="stmt"/>
         <line num="16" count="3" type="stmt"/>
-        <line num="19" count="2" type="stmt"/>
-        <line num="20" count="2" type="stmt"/>
-        <line num="23" count="2" type="cond" truecount="3" falsecount="1"/>
+        <line num="19" count="3" type="stmt"/>
+        <line num="20" count="3" type="stmt"/>
+        <line num="23" count="3" type="cond" truecount="3" falsecount="1"/>
         <line num="24" count="0" type="stmt"/>
-        <line num="26" count="2" type="stmt"/>
-        <line num="28" count="2" type="stmt"/>
-        <line num="29" count="2" type="stmt"/>
-        <line num="31" count="2" type="stmt"/>
-        <line num="33" count="2" type="stmt"/>
-        <line num="35" count="2" type="stmt"/>
+        <line num="26" count="3" type="stmt"/>
+        <line num="28" count="3" type="stmt"/>
+        <line num="29" count="3" type="stmt"/>
+        <line num="31" count="3" type="stmt"/>
+        <line num="33" count="3" type="stmt"/>
+        <line num="35" count="3" type="stmt"/>
         <line num="40" count="0" type="stmt"/>
-        <line num="43" count="2" type="stmt"/>
+        <line num="43" count="3" type="stmt"/>
         <line num="46" count="3" type="stmt"/>
         <line num="48" count="1" type="stmt"/>
         <line num="49" count="1" type="stmt"/>
@@ -142,15 +142,15 @@
         <metrics statements="13" coveredstatements="13" conditionals="4" coveredconditionals="4" methods="1" coveredmethods="1"/>
         <line num="2" count="3" type="stmt"/>
         <line num="5" count="3" type="stmt"/>
-        <line num="7" count="10" type="stmt"/>
-        <line num="9" count="10" type="cond" truecount="4" falsecount="0"/>
+        <line num="7" count="15" type="stmt"/>
+        <line num="9" count="15" type="cond" truecount="4" falsecount="0"/>
         <line num="10" count="1" type="stmt"/>
-        <line num="13" count="9" type="stmt"/>
-        <line num="16" count="9" type="stmt"/>
-        <line num="19" count="9" type="stmt"/>
-        <line num="20" count="9" type="stmt"/>
-        <line num="21" count="7" type="stmt"/>
-        <line num="22" count="7" type="stmt"/>
+        <line num="13" count="14" type="stmt"/>
+        <line num="16" count="14" type="stmt"/>
+        <line num="19" count="14" type="stmt"/>
+        <line num="20" count="14" type="stmt"/>
+        <line num="21" count="12" type="stmt"/>
+        <line num="22" count="12" type="stmt"/>
         <line num="25" count="2" type="stmt"/>
         <line num="30" count="3" type="stmt"/>
       </file>
@@ -177,18 +177,19 @@
       </file>
     </package>
     <package name="src.routes">
-      <metrics statements="25" coveredstatements="25" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      <metrics statements="26" coveredstatements="26" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="CommentsRoute.ts" path="C:\Users\berre\projects\המכללה למנהל 2025\dev_web_course_2026\dev_web_course_Backend\src\routes\CommentsRoute.ts">
-        <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <metrics statements="10" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="3" type="stmt"/>
         <line num="2" count="3" type="stmt"/>
-        <line num="4" count="3" type="stmt"/>
-        <line num="8" count="3" type="stmt"/>
-        <line num="10" count="3" type="stmt"/>
-        <line num="13" count="3" type="stmt"/>
-        <line num="15" count="3" type="stmt"/>
-        <line num="17" count="3" type="stmt"/>
-        <line num="20" count="3" type="stmt"/>
+        <line num="3" count="3" type="stmt"/>
+        <line num="5" count="3" type="stmt"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="11" count="3" type="stmt"/>
+        <line num="14" count="3" type="stmt"/>
+        <line num="16" count="3" type="stmt"/>
+        <line num="18" count="3" type="stmt"/>
+        <line num="21" count="3" type="stmt"/>
       </file>
       <file name="authRoute.ts" path="C:\Users\berre\projects\המכללה למנהל 2025\dev_web_course_2026\dev_web_course_Backend\src\routes\authRoute.ts">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
@@ -211,6 +212,23 @@
         <line num="15" count="3" type="stmt"/>
         <line num="17" count="3" type="stmt"/>
         <line num="19" count="3" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.tests">
+      <metrics statements="11" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+      <file name="testUtils.ts" path="C:\Users\berre\projects\המכללה למנהל 2025\dev_web_course_2026\dev_web_course_Backend\src\tests\testUtils.ts">
+        <metrics statements="11" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="2" count="3" type="stmt"/>
+        <line num="3" count="3" type="stmt"/>
+        <line num="11" count="3" type="stmt"/>
+        <line num="26" count="3" type="stmt"/>
+        <line num="38" count="3" type="stmt"/>
+        <line num="53" count="3" type="stmt"/>
+        <line num="72" count="3" type="stmt"/>
+        <line num="73" count="2" type="stmt"/>
+        <line num="75" count="2" type="stmt"/>
+        <line num="80" count="2" type="stmt"/>
+        <line num="81" count="2" type="stmt"/>
       </file>
     </package>
   </project>

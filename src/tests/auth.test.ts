@@ -3,21 +3,13 @@ import initApp from '../index'; // Adjust the path as necessary
 import user from '../models/userModel';
 import { Express } from 'express';
 import Movie from '../models/moviesModel';
-
+import { userData, moviesData, singleMovieData } from './testUtils';
 let app: Express;
-
-
-type MovieTestData = {
-    title: string;
-    year: number;
-    _id?: string;
-};
 
 
 beforeAll(async () => {
     app = await initApp();
     // Any setup needed before tests run
-
     await user.deleteMany({});
     await Movie.deleteMany({});
 });
@@ -29,25 +21,13 @@ afterAll((done) => {
 });
 
 
-const userData = {
-    email: "testuser@example.com",
-    password: "testpassword",
-    token: "",
-    _id: "",
-};
-
-const movie: MovieTestData = {
-    title: "test movie title",
-    year: 2024,
-};
-
 describe('Auth API', () => {
     // Relevant whene the register do a register and login actions
 
     test("access restricted url denied with no token", async () => {
         const response = await request(app)
             .post('/movie')
-            .send({ movie });
+            .send({ movie: moviesData[0] });
         expect(response.statusCode).toBe(401);
     });
 
@@ -69,7 +49,7 @@ describe('Auth API', () => {
         const response = await request(app)
             .post('/movie')
             .set("Authorization", "Bearer " + userData.token)
-            .send(movie);
+            .send(singleMovieData); // Use singleMovieData to avoid modifying moviesData array
         expect(response.statusCode).toBe(201);
         expect(response.body).toHaveProperty("_id");
 
@@ -80,7 +60,7 @@ describe('Auth API', () => {
         const response = await request(app)
             .post('/movie')
             .set("Authorization", "Bearer " + newToken)
-            .send(movie);
+            .send(moviesData[0]); // Use moviesData[0] to avoid modifying singleMovieData --> we can do both.
         expect(response.statusCode).toBe(401);
         expect(response.body).toHaveProperty("error");
 
@@ -101,10 +81,10 @@ describe('Auth API', () => {
         const response = await request(app)
             .post('/movie')
             .set("Authorization", "Bearer " + userData.token)
-            .send(movie);
+            .send(moviesData[0]);
         expect(response.statusCode).toBe(201);
         expect(response.body).toHaveProperty("_id");
-        movie._id = response.body._id;
+        moviesData[0]._id = response.body._id;
     });
 
     //set jest timeout to 10 seconds
@@ -116,7 +96,7 @@ describe('Auth API', () => {
         const response = await request(app)
             .post('/movie')
             .set("Authorization", "Bearer " + userData.token)
-            .send(movie);
+            .send(moviesData[0]);
         expect(response.statusCode).toBe(401);
         expect(response.body).toHaveProperty("error");
     });

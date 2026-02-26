@@ -15,41 +15,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const supertest_1 = __importDefault(require("supertest"));
 const index_1 = __importDefault(require("../index")); // Adjust the path as necessary
 const moviesModel_1 = __importDefault(require("../models/moviesModel"));
-const userModel_1 = __importDefault(require("../models/userModel"));
+const testUtils_1 = require("./testUtils");
 let app;
-const user = {
-    email: "berrebimevo@test.com",
-    password: "testpasswordMovies",
-    token: "",
-    _id: "",
-};
-const testData = [
-    {
-        title: "Inception",
-        year: 2010
-    },
-    {
-        title: "The Matrix",
-        year: 1999
-    },
-    {
-        title: "Interstellar",
-        year: 2014
-    }
-];
 beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
     app = yield (0, index_1.default)();
     // Any setup needed before tests run
-    yield userModel_1.default.deleteMany({ email: user.email });
     yield moviesModel_1.default.deleteMany({});
-    //register a user and save the token for authenticated requests
-    const res = yield (0, supertest_1.default)(app).post('/auth/register')
-        .send({
-        email: user.email,
-        password: user.password
-    });
-    user._id = res.body._id;
-    user.token = res.body.token;
+    yield (0, testUtils_1.registerTestUser)(app);
 }));
 afterAll((done) => {
     // Any cleanup needed after tests run
@@ -66,10 +38,10 @@ describe('Movies API', () => {
     }));
     test("test add a movie", () => __awaiter(void 0, void 0, void 0, function* () {
         //add all test data
-        for (const movie of testData) {
+        for (const movie of testUtils_1.moviesData) {
             const response = yield (0, supertest_1.default)(app)
                 .post('/movie')
-                .set('Authorization', `Bearer ${user.token}`)
+                .set('Authorization', `Bearer ${testUtils_1.userData.token}`)
                 .send(movie);
             expect(response.statusCode).toBe(201);
             expect(response.body).toMatchObject(movie);
@@ -78,20 +50,20 @@ describe('Movies API', () => {
     test("test get all movies after adding", () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield (0, supertest_1.default)(app).get('/movie');
         expect(response.statusCode).toBe(200);
-        expect(response.body.length).toBe(testData.length);
+        expect(response.body.length).toBe(testUtils_1.moviesData.length);
     }));
     test("test get movie by filter", () => __awaiter(void 0, void 0, void 0, function* () {
-        const movie = testData[0];
+        const movie = testUtils_1.moviesData[0];
         const response = yield (0, supertest_1.default)(app).get('/movie?year=' + movie.year);
         expect(response.statusCode).toBe(200);
         expect(response.body.length).toBe(1);
         expect(response.body[0].year).toBe(movie.year);
-        testData[0]._id = response.body[0]._id; // Save the ID for later tests
+        testUtils_1.moviesData[0]._id = response.body[0]._id; // Save the ID for later tests
     }));
     test("test get movie by id", () => __awaiter(void 0, void 0, void 0, function* () {
-        const response = yield (0, supertest_1.default)(app).get('/movie/' + testData[0]._id);
+        const response = yield (0, supertest_1.default)(app).get('/movie/' + testUtils_1.moviesData[0]._id);
         expect(response.statusCode).toBe(200);
-        expect(response.body._id).toBe(testData[0]._id);
+        expect(response.body._id).toBe(testUtils_1.moviesData[0]._id);
     }));
     test("test get movie by invalid id format", () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield (0, supertest_1.default)(app).get('/movie/5469842345698745');
@@ -99,23 +71,23 @@ describe('Movies API', () => {
         expect(response.body.message).toBe("Invalid ID format");
     }));
     test("test put movie by id", () => __awaiter(void 0, void 0, void 0, function* () {
-        testData[0].year = 2010;
-        testData[0].title = "Inception Updated";
+        testUtils_1.moviesData[0].year = 2010;
+        testUtils_1.moviesData[0].title = "Inception Updated";
         const response = yield (0, supertest_1.default)(app)
-            .put('/movie/' + testData[0]._id)
-            .set('Authorization', `Bearer ${user.token}`)
-            .send(testData[0]);
+            .put('/movie/' + testUtils_1.moviesData[0]._id)
+            .set('Authorization', `Bearer ${testUtils_1.userData.token}`)
+            .send(testUtils_1.moviesData[0]);
         expect(response.statusCode).toBe(200);
-        expect(response.body.title).toBe(testData[0].title);
-        expect(response.body.year).toBe(testData[0].year);
-        expect(response.body._id).toBe(testData[0]._id);
+        expect(response.body.title).toBe(testUtils_1.moviesData[0].title);
+        expect(response.body.year).toBe(testUtils_1.moviesData[0].year);
+        expect(response.body._id).toBe(testUtils_1.moviesData[0]._id);
     }));
     test("test delete a movie", () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield (0, supertest_1.default)(app)
-            .delete('/movie/' + testData[0]._id)
-            .set('Authorization', `Bearer ${user.token}`);
+            .delete('/movie/' + testUtils_1.moviesData[0]._id)
+            .set('Authorization', `Bearer ${testUtils_1.userData.token}`);
         expect(response.statusCode).toBe(200);
-        const getResponse = yield (0, supertest_1.default)(app).get('/movie/' + testData[0]._id);
+        const getResponse = yield (0, supertest_1.default)(app).get('/movie/' + testUtils_1.moviesData[0]._id);
         expect(getResponse.statusCode).toBe(404);
     }));
     test("test missing DATABASE_URL env var", () => __awaiter(void 0, void 0, void 0, function* () {
