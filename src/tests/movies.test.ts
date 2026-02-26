@@ -1,8 +1,8 @@
 import request from 'supertest';
 import initApp from '../index'; // Adjust the path as necessary
-import movies from '../models/moviesModel';
+import Movies from '../models/moviesModel';
 import { Express } from 'express';
-
+import User from '../models/userModel';
 let app: Express;
 
 type MovieTestData = {
@@ -10,6 +10,13 @@ type MovieTestData = {
     year: number;
     _id?: string;
 };
+
+const user = {
+    email: "berrebimevo@test.com",
+    password: "testpasswordMovies",
+    token: "",
+    _id: "",
+}
 
 const testData: MovieTestData[] = [
     {
@@ -26,12 +33,19 @@ const testData: MovieTestData[] = [
     }
 ]
 
-
 beforeAll(async () => {
     app = await initApp();
     // Any setup needed before tests run
-
-    await movies.deleteMany({});
+    await User.deleteMany({ email: user.email });
+    await Movies.deleteMany({});
+    //register a user and save the token for authenticated requests
+    const res = await request(app).post('/auth/register')
+        .send({
+            email: user.email,
+            password: user.password
+        });
+    user._id = res.body._id;
+    user.token = res.body.token;
 });
 
 afterAll((done) => {
@@ -56,6 +70,7 @@ describe('Movies API', () => {
         for (const movie of testData) {
             const response = await request(app)
                 .post('/movie')
+                .set('Authorization', `Bearer ${user.token}`)
                 .send(movie);
             expect(response.statusCode).toBe(201);
             expect(response.body).toMatchObject(movie);
@@ -101,6 +116,7 @@ describe('Movies API', () => {
         testData[0].title = "Inception Updated";
         const response = await request(app)
             .put('/movie/' + testData[0]._id)
+            .set('Authorization', `Bearer ${user.token}`)
             .send(testData[0]);
         expect(response.statusCode).toBe(200);
         expect(response.body.title).toBe(testData[0].title);
@@ -111,7 +127,9 @@ describe('Movies API', () => {
 
 
     test("test delete a movie", async () => {
-        const response = await request(app).delete('/movie/' + testData[0]._id);
+        const response = await request(app)
+            .delete('/movie/' + testData[0]._id)
+            .set('Authorization', `Bearer ${user.token}`);
         expect(response.statusCode).toBe(200);
 
         const getResponse = await request(app).get('/movie/' + testData[0]._id);

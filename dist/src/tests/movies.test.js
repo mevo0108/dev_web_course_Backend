@@ -15,7 +15,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const supertest_1 = __importDefault(require("supertest"));
 const index_1 = __importDefault(require("../index")); // Adjust the path as necessary
 const moviesModel_1 = __importDefault(require("../models/moviesModel"));
+const userModel_1 = __importDefault(require("../models/userModel"));
 let app;
+const user = {
+    email: "berrebimevo@test.com",
+    password: "testpasswordMovies",
+    token: "",
+    _id: "",
+};
 const testData = [
     {
         title: "Inception",
@@ -33,7 +40,16 @@ const testData = [
 beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
     app = yield (0, index_1.default)();
     // Any setup needed before tests run
+    yield userModel_1.default.deleteMany({ email: user.email });
     yield moviesModel_1.default.deleteMany({});
+    //register a user and save the token for authenticated requests
+    const res = yield (0, supertest_1.default)(app).post('/auth/register')
+        .send({
+        email: user.email,
+        password: user.password
+    });
+    user._id = res.body._id;
+    user.token = res.body.token;
 }));
 afterAll((done) => {
     // Any cleanup needed after tests run
@@ -53,6 +69,7 @@ describe('Movies API', () => {
         for (const movie of testData) {
             const response = yield (0, supertest_1.default)(app)
                 .post('/movie')
+                .set('Authorization', `Bearer ${user.token}`)
                 .send(movie);
             expect(response.statusCode).toBe(201);
             expect(response.body).toMatchObject(movie);
@@ -86,6 +103,7 @@ describe('Movies API', () => {
         testData[0].title = "Inception Updated";
         const response = yield (0, supertest_1.default)(app)
             .put('/movie/' + testData[0]._id)
+            .set('Authorization', `Bearer ${user.token}`)
             .send(testData[0]);
         expect(response.statusCode).toBe(200);
         expect(response.body.title).toBe(testData[0].title);
@@ -93,7 +111,9 @@ describe('Movies API', () => {
         expect(response.body._id).toBe(testData[0]._id);
     }));
     test("test delete a movie", () => __awaiter(void 0, void 0, void 0, function* () {
-        const response = yield (0, supertest_1.default)(app).delete('/movie/' + testData[0]._id);
+        const response = yield (0, supertest_1.default)(app)
+            .delete('/movie/' + testData[0]._id)
+            .set('Authorization', `Bearer ${user.token}`);
         expect(response.statusCode).toBe(200);
         const getResponse = yield (0, supertest_1.default)(app).get('/movie/' + testData[0]._id);
         expect(getResponse.statusCode).toBe(404);
