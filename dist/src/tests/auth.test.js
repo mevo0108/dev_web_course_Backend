@@ -40,13 +40,12 @@ const movie = {
 };
 describe('Auth API', () => {
     // Relevant whene the register do a register and login actions
-    /* test("access restricted url denied with no token", async () => {
-         const response = await request(app)
-             .post('/movie')
-             .send({ movieData });
-         expect(response.statusCode).toBe(401);
-     });
- */
+    test("access restricted url denied with no token", () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield (0, supertest_1.default)(app)
+            .post('/movie')
+            .send({ movie });
+        expect(response.statusCode).toBe(401);
+    }));
     test("test register a user", () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield (0, supertest_1.default)(app)
             .post('/auth/register')
@@ -66,7 +65,15 @@ describe('Auth API', () => {
             .send(movie);
         expect(response.statusCode).toBe(201);
         expect(response.body).toHaveProperty("_id");
-        movie._id = response.body._id;
+    }));
+    test("test access with modified token restricted", () => __awaiter(void 0, void 0, void 0, function* () {
+        const newToken = userData.token + "m";
+        const response = yield (0, supertest_1.default)(app)
+            .post('/movie')
+            .set("Authorization", "Bearer " + newToken)
+            .send(movie);
+        expect(response.statusCode).toBe(401);
+        expect(response.body).toHaveProperty("error");
     }));
     test("test login a user", () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield (0, supertest_1.default)(app)
@@ -77,6 +84,27 @@ describe('Auth API', () => {
         });
         expect(response.statusCode).toBe(200);
         expect(response.body).toHaveProperty("token");
+    }));
+    test("test access with token permitted after LOGIN", () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield (0, supertest_1.default)(app)
+            .post('/movie')
+            .set("Authorization", "Bearer " + userData.token)
+            .send(movie);
+        expect(response.statusCode).toBe(201);
+        expect(response.body).toHaveProperty("_id");
+        movie._id = response.body._id;
+    }));
+    //set jest timeout to 10 seconds
+    jest.setTimeout(10000); // Set a longer timeout for this test to allow for token expiration
+    test("test token expiration", () => __awaiter(void 0, void 0, void 0, function* () {
+        // Simulate token expiration by waiting for a short time (5 second)
+        yield new Promise(resolve => setTimeout(resolve, 6000)); // Adjust the time as needed
+        const response = yield (0, supertest_1.default)(app)
+            .post('/movie')
+            .set("Authorization", "Bearer " + userData.token)
+            .send(movie);
+        expect(response.statusCode).toBe(401);
+        expect(response.body).toHaveProperty("error");
     }));
 });
 //# sourceMappingURL=auth.test.js.map
